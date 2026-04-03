@@ -625,6 +625,13 @@ document.head.appendChild(styleSheet);
 (function HeroSurface() {
   const canvas = document.getElementById('hero-canvas');
   if (!canvas) return;
+  
+  // Skip on mobile for performance
+  if (isMobile) {
+    canvas.style.display = 'none';
+    return;
+  }
+  
   const ctx = canvas.getContext('2d');
   let W, H;
   const ripples = [];
