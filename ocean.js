@@ -319,7 +319,6 @@ document.head.appendChild(styleSheet);
   }
 
   let scrollY = 0;
-  let scrollY = 0;
   window.addEventListener('scroll', throttle(() => { 
     scrollY = window.scrollY; 
   }, 50), { passive: true });
@@ -768,9 +767,6 @@ if (!isMobile) {
   
   window.addEventListener('scroll', handleParallax, { passive: true });
 }
-  }
-
-}, { passive: true });
 
 // ═══════════════════════════════════════════════════════════
 // 📩 CONTACT FORM
