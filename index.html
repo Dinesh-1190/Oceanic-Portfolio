@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dinesh Kumar Pattanaik — Deep Ocean Portfolio</title>
+  <meta name="description" content="Dinesh Kumar Pattanaik — Tech Entrepreneur & Software Engineer. B.Tech CS (Data Science). Building real products with ROI-focused development.">
+  <meta name="keywords" content="Dinesh Kumar Pattanaik, Software Engineer, Tech Entrepreneur, Frontend Developer, Angul, Bhubaneswar, Odisha, Portfolio">
+  <meta name="author" content="Dinesh Kumar Pattanaik">
+  <meta property="og:title" content="Dinesh Kumar Pattanaik — Ocean Portfolio">
+  <meta property="og:description" content="Tech Entrepreneur. Software Engineer. Bridging clean code and profitable business outcomes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ocean.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ GLOBAL LAYERS ══ -->
+<div id="bubbles-global" class="bubbles-global"></div>
+<canvas id="ambient-particles" class="ambient-particles"></canvas>
+
+<!-- ═══════════════════════════════════════ NAVIGATION ══════ -->
+<nav id="navbar" class="navbar">
+  <a href="#hero" class="nav-logo">
+    <span class="logo-bracket">&lt;</span>DKP<span class="logo-bracket">/&gt;</span>
+  </a>
+  
+  <div class="nav-center">
+    <ul class="nav-links nav-left">
+      <li><a href="#about"    class="nav-link" data-depth="40m">About</a></li>
+      <li><a href="#skills"   class="nav-link" data-depth="200m">Skills</a></li>
+    </ul>
+    
+    <a href="#hero" class="nav-sun" aria-label="Home">
+      <div class="sun-icon">☀️</div>
+    </a>
+    
+    <ul class="nav-links nav-right">
+      <li><a href="#projects" class="nav-link" data-depth="1000m">Projects</a></li>
+      <li><a href="#contact"  class="nav-link" data-depth="3800m">Contact</a></li>
+    </ul>
+  </div>
+  
+  <div class="nav-depth-meter">
+    <span class="depth-label">DEPTH</span>
+    <div class="depth-track"><div class="depth-fill" id="depthFill"></div></div>
+    <span id="depthValue" class="depth-val">0m</span>
+  </div>
+  <button class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about"    class="mob-link">🐠 About</a>
+  <a href="#skills"   class="mob-link">🦈 Skills</a>
+  <a href="#projects" class="mob-link">🐙 Projects</a>
+  <a href="#contact"  class="mob-link">🏝️ Contact</a>
+</div>
+
+<!-- ═══════════════════════════════════════ HERO — SURFACE ══ -->
+<section id="hero" class="s-hero">
+  <canvas id="hero-canvas" class="s-canvas"></canvas>
+
+  <!-- Sun + rays -->
+  <div class="sun-wrap">
+    <div class="sun-orb"></div>
+    <div class="sun-rays" id="sunRays"></div>
+  </div>
+
+  <!-- Caustics (light pattern on water) -->
+  <div class="caustics"></div>
+
+  <!-- Floating sea creatures -->
+  <div class="surface-creatures">
+    <span class="creature-float c1">🐟</span>
+    <span class="creature-float c2">🐠</span>
+    <span class="creature-float c3">🦋</span>
+    <span class="creature-float c4">🌿</span>
+  </div>
+
+  <!-- Hero Content -->
+  <div class="hero-content" id="heroContent">
+    <div class="hero-dive-badge">
+      <span class="badge-wave">🌊</span>
+      <span>Dive into my portfolio</span>
+    </div>
+
+    <h1 class="hero-name">
+      <span class="name-top">Dinesh Kumar</span>
+      <span class="name-bottom">Pattanaik</span>
+    </h1>
+
+    <div class="hero-roles">
+      <span class="role-pill">⚙️ Tech Entrepreneur</span>
+      <span class="role-dot">·</span>
+      <span class="role-pill">💻 Software Engineer</span>
+    </div>
+
+    <p class="hero-tagline">
+      Bridging the gap between <em>clean code</em> and<br>
+      <em>profitable business outcomes.</em>
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat-bubble">
+        <span class="stat-n">3+</span>
+        <span class="stat-l">Projects Built</span>
+      </div>
+      <div class="stat-bubble">
+        <span class="stat-n">100</span>
+        <span class="stat-l">SEO Score</span>
+      </div>
+      <div class="stat-bubble">
+        <span class="stat-n">IIT</span>
+        <span class="stat-l">Presented</span>
+      </div>
+    </div>
+
+    <div class="hero-cta">
+      <a href="#projects" class="btn-dive">🌊 View My Work</a>
+      <a href="#contact"  class="btn-talk">💬 Let's Talk Business</a>
+    </div>
+
+    <div class="hero-connect">
+      <a href="mailto:dineshpattanaik388@gmail.com" class="connect-pill">📧 Email</a>
+      <a href="https://linkedin.com/in/dinesh-pattanaik" target="_blank" class="connect-pill">🔗 LinkedIn</a>
+      <a href="https://github.com/Dinesh-1190" target="_blank" class="connect-pill">🐙 GitHub</a>
+    </div>
+
+    <div class="open-badge">
+      <span class="open-dot"></span>
+      Available for freelance &amp; full-time opportunities
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="scroll-cue">
+    <div class="scroll-fish">🐟</div>
+    <span>Scroll to dive deeper</span>
+    <div class="scroll-arrow">↓</div>
+  </div>
+
+  <!-- Wave transition to next section -->
+  <div class="wave-bot">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="wave-path w1" d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z"/>
+      <path class="wave-path w2" d="M0,80 C360,20 720,120 1080,40 C1260,20 1380,80 1440,70 L1440,120 L0,120 Z" opacity="0.6"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ ABOUT — MID OCEAN ══ -->
+<section id="about" class="s-about">
+  <canvas id="fish-canvas" class="s-canvas"></canvas>
+
+  <div class="depth-tag">
+    <span class="dt-icon">🐠</span>
+    <span>40m Deep — Mid Ocean Zone</span>
+  </div>
+
+  <div class="section-inner">
+    <div class="section-eyebrow">// about me</div>
+    <h2 class="section-title">The Techno-Commercial <span class="glow-accent">Advantage</span></h2>
+
+    <div class="about-grid">
+      <!-- Main bio -->
+      <div class="about-bio glass-panel reveal">
+        <p>
+          I'm a <strong>B.Tech Computer Science (Data Science)</strong> student at
+          <strong>Trident Academy of Technology, Bhubaneswar</strong> (BPUT, 2024–2028) —
+          shipping real products while most students are still debugging hello-world.
+        </p>
+        <p>
+          Growing up in a <strong>defence family</strong> forged something most engineers lack:
+          iron discipline, pressure-tested adaptability, and a non-negotiable sense of
+          accountability. Deadlines are not suggestions in my world.
+        </p>
+        <p>
+          My edge is what I call the <strong>Techno-Commercial advantage.</strong>
+          While peers let GitHub repos collect dust, I walk into client meetings, pitch digital
+          solutions in business language, build the product, and measure success by the client's
+          ROI — not just whether it compiles.
+        </p>
+        <p>
+          I've built solutions for local businesses in Angul, participated in
+          <strong>IIT Bhubaneswar's PRAVAAH technical fest</strong>, and engaged in startup
+          ideation through the B-Plan event. Every line of code I write has a real-world purpose.
+        </p>
+
+        <div class="bio-tags">
+          <span class="bio-tag">🎖️ Defence Background</span>
+          <span class="bio-tag">💡 B2B Pitching</span>
+          <span class="bio-tag">🚀 ROI-Focused Dev</span>
+          <span class="bio-tag">🔥 Self-Starter</span>
+        </div>
+      </div>
+
+      <!-- Info card -->
+      <div class="about-info glass-panel reveal" style="--d:0.2s">
+        <div class="info-row">
+          <span class="info-label">🏛️ Institution</span>
+          <span class="info-val">Trident Academy of Technology</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">🎓 Degree</span>
+          <span class="info-val">B.Tech — CS (Data Science)</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">🏫 University</span>
+          <span class="info-val">BPUT · 2024 – 2028</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">📍 Location</span>
+          <span class="info-val">Angul / Bhubaneswar, Odisha</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">📞 Phone</span>
+          <a href="tel:+916371722089" class="info-val info-link">+91 6371722089</a>
+        </div>
+        <div class="info-row">
+          <span class="info-label">🔗 LinkedIn</span>
+          <a href="https://linkedin.com/in/dinesh-pattanaik" target="_blank" class="info-val info-link">linkedin.com/in/dinesh-pattanaik</a>
+        </div>
+        <div class="info-row">
+          <span class="info-label">🐙 GitHub</span>
+          <a href="https://github.com/Dinesh-1190" target="_blank" class="info-val info-link">github.com/Dinesh-1190</a>
+        </div>
+        <div class="info-row">
+          <span class="info-label">🏅 Cert.</span>
+          <span class="info-val">IBM Cloud Computing — Coursera</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">🟢 Status</span>
+          <span class="info-val status-open"><span class="pulse-dot"></span> Available for opportunities</span>
+        </div>
+        <a href="#contact" class="btn-contact-cta">💬 Start a Conversation</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wave-bot wave-bot--dark">
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="wave-path wd1" d="M0,50 C360,100 720,0 1080,50 C1260,75 1380,30 1440,50 L1440,100 L0,100 Z"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ SKILLS — DEEP OCEAN ══ -->
+<section id="skills" class="s-skills">
+  <canvas id="shark-canvas" class="s-canvas"></canvas>
+  <div class="bio-lights" id="bioLights"></div>
+
+  <div class="depth-tag depth-tag--dark">
+    <span class="dt-icon">🦈</span>
+    <span>200m Deep — Deep Ocean Zone</span>
+  </div>
+
+  <div class="section-inner">
+    <div class="section-eyebrow glow-eye">// technical arsenal</div>
+    <h2 class="section-title glow-title">Tools of the <span class="glow-accent">Trade</span></h2>
+    <p class="skills-sub">Hover the jellyfish to illuminate each skill</p>
+
+    <!-- PROGRAMMING LANGUAGES -->
+    <div class="skill-zone reveal">
+      <div class="skill-zone-label">
+        <span class="zone-icon">⟨/⟩</span> Programming Languages
+      </div>
+      <div class="jellyfish-sea">
+        <div class="jellyfish" data-glow="#F7DF1E" data-skill="JavaScript ES6+">
+          <div class="jelly-bell" style="--gc:#F7DF1E55;--gs:#F7DF1E">
+            <span class="jelly-icon">JS</span>
+            <span class="jelly-name">JavaScript ES6+</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#3776AB" data-skill="Python">
+          <div class="jelly-bell" style="--gc:#3776AB55;--gs:#3776AB">
+            <span class="jelly-icon">🐍</span>
+            <span class="jelly-name">Python</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#A8B9CC" data-skill="C">
+          <div class="jelly-bell" style="--gc:#A8B9CC55;--gs:#A8B9CC">
+            <span class="jelly-icon">C</span>
+            <span class="jelly-name">C</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#00599C" data-skill="C++">
+          <div class="jelly-bell" style="--gc:#00599C55;--gs:#00599C">
+            <span class="jelly-icon">C++</span>
+            <span class="jelly-name">C++</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CORE CONCEPTS -->
+    <div class="skill-zone reveal" style="--d:0.1s">
+      <div class="skill-zone-label">
+        <span class="zone-icon">◈</span> Core Concepts
+      </div>
+      <div class="jellyfish-sea">
+        <div class="jellyfish" data-glow="#9B59B6" data-skill="OOP">
+          <div class="jelly-bell" style="--gc:#9B59B655;--gs:#9B59B6">
+            <span class="jelly-icon">OOP</span>
+            <span class="jelly-name">OOP</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#E74C3C" data-skill="Data Structures">
+          <div class="jelly-bell" style="--gc:#E74C3C55;--gs:#E74C3C">
+            <span class="jelly-icon">DS</span>
+            <span class="jelly-name">Data Structures</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#E67E22" data-skill="Algorithms">
+          <div class="jelly-bell" style="--gc:#E67E2255;--gs:#E67E22">
+            <span class="jelly-icon">∑</span>
+            <span class="jelly-name">Algorithms</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEB TECHNOLOGIES -->
+    <div class="skill-zone reveal" style="--d:0.2s">
+      <div class="skill-zone-label">
+        <span class="zone-icon">▣</span> Web Technologies
+      </div>
+      <div class="jellyfish-sea">
+        <div class="jellyfish" data-glow="#E34F26" data-skill="HTML5">
+          <div class="jelly-bell" style="--gc:#E34F2655;--gs:#E34F26">
+            <span class="jelly-icon">H5</span>
+            <span class="jelly-name">HTML5</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#1572B6" data-skill="CSS3">
+          <div class="jelly-bell" style="--gc:#1572B655;--gs:#1572B6">
+            <span class="jelly-icon">CSS</span>
+            <span class="jelly-name">CSS3</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#06B6D4" data-skill="Tailwind CSS">
+          <div class="jelly-bell" style="--gc:#06B6D455;--gs:#06B6D4">
+            <span class="jelly-icon">TW</span>
+            <span class="jelly-name">Tailwind CSS</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#FF6B35" data-skill="REST APIs">
+          <div class="jelly-bell" style="--gc:#FF6B3555;--gs:#FF6B35">
+            <span class="jelly-icon">API</span>
+            <span class="jelly-name">REST APIs</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#2ECC71" data-skill="Responsive Design">
+          <div class="jelly-bell" style="--gc:#2ECC7155;--gs:#2ECC71">
+            <span class="jelly-icon">📱</span>
+            <span class="jelly-name">Responsive</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEV TOOLS -->
+    <div class="skill-zone reveal" style="--d:0.3s">
+      <div class="skill-zone-label">
+        <span class="zone-icon">⚙</span> Dev Tools
+      </div>
+      <div class="jellyfish-sea">
+        <div class="jellyfish" data-glow="#007ACC" data-skill="VS Code">
+          <div class="jelly-bell" style="--gc:#007ACC55;--gs:#007ACC">
+            <span class="jelly-icon">VSC</span>
+            <span class="jelly-name">VS Code</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#F05032" data-skill="Git">
+          <div class="jelly-bell" style="--gc:#F0503255;--gs:#F05032">
+            <span class="jelly-icon">Git</span>
+            <span class="jelly-name">Git</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#181717" data-skill="GitHub" style="--gc:#FFFFFF55;--gs:#AAA">
+          <div class="jelly-bell" style="--gc:#FFFFFF22;--gs:#AAA">
+            <span class="jelly-icon">🐙</span>
+            <span class="jelly-name">GitHub</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#F24E1E" data-skill="Figma">
+          <div class="jelly-bell" style="--gc:#F24E1E55;--gs:#F24E1E">
+            <span class="jelly-icon">Fig</span>
+            <span class="jelly-name">Figma</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#00979D" data-skill="Arduino">
+          <div class="jelly-bell" style="--gc:#00979D55;--gs:#00979D">
+            <span class="jelly-icon">⚡</span>
+            <span class="jelly-name">Arduino C++</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEVELOPMENT + FIREBASE -->
+    <div class="skill-zone reveal" style="--d:0.4s">
+      <div class="skill-zone-label">
+        <span class="zone-icon">◎</span> Development Areas
+      </div>
+      <div class="jellyfish-sea">
+        <div class="jellyfish" data-glow="#61DAFB">
+          <div class="jelly-bell" style="--gc:#61DAFB55;--gs:#61DAFB">
+            <span class="jelly-icon">FE</span>
+            <span class="jelly-name">Frontend Dev</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#68A063">
+          <div class="jelly-bell" style="--gc:#68A06355;--gs:#68A063">
+            <span class="jelly-icon">BE</span>
+            <span class="jelly-name">Backend Dev</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#FFCA28">
+          <div class="jelly-bell" style="--gc:#FFCA2855;--gs:#FFCA28">
+            <span class="jelly-icon">🔥</span>
+            <span class="jelly-name">Firebase Auth</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#FF8A00">
+          <div class="jelly-bell" style="--gc:#FF8A0055;--gs:#FF8A00">
+            <span class="jelly-icon">FS</span>
+            <span class="jelly-name">Firestore</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#039BE5">
+          <div class="jelly-bell" style="--gc:#039BE555;--gs:#039BE5">
+            <span class="jelly-icon">📦</span>
+            <span class="jelly-name">Firebase Storage</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#8BC34A">
+          <div class="jelly-bell" style="--gc:#8BC34A55;--gs:#8BC34A">
+            <span class="jelly-icon">🤖</span>
+            <span class="jelly-name">Embedded Systems</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOFT SKILLS -->
+    <div class="skill-zone reveal" style="--d:0.5s">
+      <div class="skill-zone-label">
+        <span class="zone-icon">◉</span> Soft Skills &amp; Techno-Commercial
+      </div>
+      <div class="jellyfish-sea">
+        <div class="jellyfish" data-glow="#E91E63">
+          <div class="jelly-bell" style="--gc:#E91E6355;--gs:#E91E63">
+            <span class="jelly-icon">💼</span>
+            <span class="jelly-name">B2B Pitching</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#FF5722">
+          <div class="jelly-bell" style="--gc:#FF572255;--gs:#FF5722">
+            <span class="jelly-icon">🤝</span>
+            <span class="jelly-name">Client Negotiation</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#9C27B0">
+          <div class="jelly-bell" style="--gc:#9C27B055;--gs:#9C27B0">
+            <span class="jelly-icon">📋</span>
+            <span class="jelly-name">Business Plan Writing</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#3F51B5">
+          <div class="jelly-bell" style="--gc:#3F51B555;--gs:#3F51B5">
+            <span class="jelly-icon">🎤</span>
+            <span class="jelly-name">Tech Presentations</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="jellyfish" data-glow="#009688">
+          <div class="jelly-bell" style="--gc:#00968855;--gs:#009688">
+            <span class="jelly-icon">🧩</span>
+            <span class="jelly-name">Problem Solving</span>
+          </div>
+          <div class="jelly-tentacles"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /section-inner -->
+
+  <div class="wave-bot wave-bot--abyss">
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="wave-path wa1" d="M0,60 C360,110 720,10 1080,70 C1260,95 1380,40 1440,60 L1440,100 L0,100 Z"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ PROJECTS — ABYSS ══ -->
+<section id="projects" class="s-projects">
+  <div class="flashlight-overlay" id="flashlightOverlay"></div>
+  <div class="abyss-creatures" id="abyssCreatures"></div>
+
+  <div class="depth-tag depth-tag--abyss">
+    <span class="dt-icon">🐙</span>
+    <span>1000m Deep — The Abyss</span>
+  </div>
+
+  <div class="section-inner projects-inner">
+    <div class="section-eyebrow glow-eye">// featured projects</div>
+    <h2 class="section-title glow-title">Built &amp; <span class="glow-accent">Deployed</span></h2>
+    <p class="projects-hint">🔦 Move your cursor — use it as a flashlight to explore</p>
+
+    <div class="projects-grid">
+
+      <!-- PROJECT 01 -->
+      <article class="project-card glass-panel reveal">
+        <div class="proj-num">01</div>
+        <div class="proj-status live"><span class="live-dot"></span> Live B2B Project</div>
+        <h3 class="proj-title">MOHOTSAV Fashion Store</h3>
+        <p class="proj-desc">
+          Pitched and won a web contract with Angul's largest fashion retailer.
+          Handled everything solo — client brief, UI/UX design, SEO strategy,
+          and deployment. The result: a live production site with a
+          <strong>perfect 100/100 Google Lighthouse SEO score.</strong>
+          No agency. One engineer who speaks both code and business.
+        </p>
+        <div class="proj-highlight">
+          <span class="highlight-num">100</span>
+          <span class="highlight-label">Google Lighthouse SEO</span>
+        </div>
+        <div class="proj-tech">
+          <span class="tech-tag">HTML5</span>
+          <span class="tech-tag">CSS3</span>
+          <span class="tech-tag">JavaScript</span>
+          <span class="tech-tag">SEO Optimization</span>
+          <span class="tech-tag">Lighthouse 100</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://mohotsavangul.com/" target="_blank" class="proj-link-btn">
+            🔗 View Live Site → mohotsavangul.com
+          </a>
+        </div>
+        <div class="proj-glow" style="--pc:#00FF8888"></div>
+      </article>
+
+      <!-- PROJECT 02 -->
+      <article class="project-card glass-panel reveal" style="--d:0.15s">
+        <div class="proj-num">02</div>
+        <div class="proj-status fullstack">Full-Stack Build</div>
+        <h3 class="proj-title">Auto-Care Management System</h3>
+        <p class="proj-desc">
+          Designed and built a full-stack B2B vehicle management system for a
+          large car garage in Angul. Generates unique <strong>reference IDs</strong> per vehicle —
+          customers track their service status in real-time while requests route
+          to a secure admin dashboard. Fully developed and demonstrated; the client
+          couldn't proceed due to financial constraints at the time.
+        </p>
+        <div class="proj-tech">
+          <span class="tech-tag">JavaScript</span>
+          <span class="tech-tag">Firebase Firestore</span>
+          <span class="tech-tag">Firebase Auth</span>
+          <span class="tech-tag">Admin Dashboard</span>
+        </div>
+        <div class="proj-glow" style="--pc:#4488FF88"></div>
+      </article>
+
+      <!-- PROJECT 03 -->
+      <article class="project-card glass-panel reveal" style="--d:0.3s">
+        <div class="proj-num">03</div>
+        <div class="proj-status inprogress">🔧 In Progress</div>
+        <h3 class="proj-title">UrbanEase</h3>
+        <p class="proj-desc">
+          A web platform simplifying relocation for bachelors moving to new cities —
+          local service discovery, essential resources, and city-based info aggregation.
+          Working on API integration, a modular frontend, and a Firebase backend
+          (Auth, Firestore, Storage) with multi-tier role access:
+          <strong>Owner / Bachelor / Admin.</strong>
+        </p>
+        <div class="proj-tech">
+          <span class="tech-tag">HTML5</span>
+          <span class="tech-tag">CSS3</span>
+          <span class="tech-tag">JavaScript</span>
+          <span class="tech-tag">REST APIs</span>
+          <span class="tech-tag">Firebase</span>
+        </div>
+        <div class="proj-glow" style="--pc:#FF880088"></div>
+      </article>
+
+      <!-- PROJECT 04 -->
+      <article class="project-card glass-panel reveal" style="--d:0.45s">
+        <div class="proj-num">04</div>
+        <div class="proj-status hardware">Hardware · IIT PRAVAAH</div>
+        <h3 class="proj-title">Trekkon — Line Follower Robot</h3>
+        <p class="proj-desc">
+          Built an autonomous line-follower robot using IR sensors for real-time
+          path detection. Implemented microcontroller-based C++ decision logic to
+          control motor speed and direction through curves and sharp turns.
+          <strong>Presented at IIT Bhubaneswar's PRAVAAH technical fest</strong>
+          and participated in the B-Plan startup ideation event.
+        </p>
+        <div class="proj-tech">
+          <span class="tech-tag">C++</span>
+          <span class="tech-tag">Arduino</span>
+          <span class="tech-tag">IR Sensors</span>
+          <span class="tech-tag">Embedded Systems</span>
+          <span class="tech-tag">B-Plan Pitch</span>
+        </div>
+        <div class="proj-glow" style="--pc:#AA44FF88"></div>
+      </article>
+
+    </div><!-- /projects-grid -->
+  </div>
+
+  <div class="wave-bot wave-bot--floor">
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="wave-path wf1" d="M0,40 C240,90 480,10 720,55 C960,100 1200,15 1440,50 L1440,100 L0,100 Z"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ CONTACT — OCEAN FLOOR ══ -->
+<section id="contact" class="s-contact">
+  <!-- Ocean floor decorations -->
+  <div class="ocean-floor-scene">
+    <div class="sand-bed"></div>
+    <div class="coral coral-1">🪸</div>
+    <div class="coral coral-2">🌿</div>
+    <div class="coral coral-3">🪸</div>
+    <div class="coral coral-4">🌿</div>
+    <div class="coral coral-5">🪸</div>
+    <div class="rock rock-1"></div>
+    <div class="rock rock-2"></div>
+    <div class="starfish sf-1">⭐</div>
+    <div class="starfish sf-2">🦀</div>
+    <div class="starfish sf-3">🐚</div>
+    <div class="seaweed sw-1">🌊</div>
+    <div class="seaweed sw-2">🌊</div>
+    <div class="treasure-chest-deco">💰</div>
+  </div>
+
+  <div class="depth-tag depth-tag--floor">
+    <span class="dt-icon">🏝️</span>
+    <span>3800m Deep — Ocean Floor</span>
+  </div>
+
+  <div class="section-inner">
+    <div class="section-eyebrow glow-eye">// contact</div>
+    <h2 class="section-title glow-title">Let's Build Something <span class="glow-accent">Together</span></h2>
+    <p class="contact-intro">
+      Whether you're a business looking to go digital, a recruiter spotting a high-impact engineer,
+      or a collaborator with a big idea — I want to hear from you.
+      Let's talk outcomes, not just code.
+    </p>
+
+    <div class="contact-grid">
+      <!-- Info Side -->
+      <div class="contact-info-side reveal">
+        <div class="contact-info-card glass-panel">
+          <a href="mailto:dineshpattanaik388@gmail.com" class="contact-info-row">
+            <div class="ci-icon">📧</div>
+            <div class="ci-content">
+              <div class="ci-label">Email</div>
+              <div class="ci-val">dineshpattanaik388@gmail.com</div>
+            </div>
+          </a>
+          <a href="tel:+916371722089" class="contact-info-row">
+            <div class="ci-icon">📞</div>
+            <div class="ci-content">
+              <div class="ci-label">Phone</div>
+              <div class="ci-val">+91 6371722089</div>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/dinesh-pattanaik-6163b02a3/" target="_blank" class="contact-info-row">
+            <div class="ci-icon">🔗</div>
+            <div class="ci-content">
+              <div class="ci-label">LinkedIn</div>
+              <div class="ci-val">linkedin.com/in/dinesh-pattanaik</div>
+            </div>
+          </a>
+          <a href="https://github.com/Dinesh-1190" target="_blank" class="contact-info-row">
+            <div class="ci-icon">🐙</div>
+            <div class="ci-content">
+              <div class="ci-label">GitHub</div>
+              <div class="ci-val">github.com/Dinesh-1190</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="availability-card glass-panel">
+          <div class="av-title">
+            <span class="pulse-dot"></span>
+            Currently Available For
+          </div>
+          <ul class="av-list">
+            <li>🚀 Freelance Projects</li>
+            <li>💼 Full-Time Opportunities</li>
+            <li>🤝 B2B Collaborations</li>
+            <li>🏆 Startup Partnerships</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Treasure Chest Form -->
+      <div class="treasure-form-wrap reveal" style="--d:0.2s">
+        <div class="chest-lid-area">
+          <div class="chest-lid-graphic">
+            <div class="chest-lid-top">💰 Send Me a Message</div>
+            <div class="chest-sparkles">✨ ✨ ✨</div>
+          </div>
+        </div>
+        <form class="treasure-form glass-panel" id="contactForm">
+          <div class="form-row-2">
+            <div class="form-field">
+              <label class="form-lbl">👤 Your Name</label>
+              <input type="text" class="form-inp" placeholder="e.g. Priya Sharma" required>
+            </div>
+            <div class="form-field">
+              <label class="form-lbl">📧 Your Email</label>
+              <input type="email" class="form-inp" placeholder="you@example.com" required>
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-lbl">📋 Subject</label>
+            <input type="text" class="form-inp" placeholder="Project / Opportunity / Collaboration" required>
+          </div>
+          <div class="form-field">
+            <label class="form-lbl">💬 Message</label>
+            <textarea class="form-inp form-ta" rows="5" placeholder="Tell me about your project, timeline, and goals..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit" id="formSubmit">
+            <span class="submit-text">🚀 Launch Message</span>
+            <span class="submit-bubbles">🫧</span>
+          </button>
+          <div class="form-success" id="formSuccess" style="display:none">
+            <div class="success-icon">✅</div>
+            <div class="success-msg">Message sent! I'll get back to you soon 🐠</div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ FOOTER ══ -->
+<footer class="footer">
+  <div class="footer-fish">🐟 🐠 🐡 🦈 🐙 🐚</div>
+  <p class="footer-text">
+    Designed &amp; built by <strong>Dinesh Kumar Pattanaik</strong> · © <span id="footerYear"></span>
+  </p>
+  <p class="footer-sub">Bridging clean code and profitable business outcomes.</p>
+  <a href="#hero" class="back-to-surface">🌊 Surface ↑</a>
+</footer>
+
+<script src="ocean.js"></script>
+</body>
+</html>
