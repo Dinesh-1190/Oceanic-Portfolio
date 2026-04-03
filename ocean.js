@@ -79,13 +79,16 @@ function createBubble() {
   container.appendChild(b);
   b.addEventListener('animationend', () => { b.remove(); createBubble(); });
 }
-for (let i = 0; i < 45; i++) createBubble();
+// Reduce bubbles on mobile
+const isMobile = window.innerWidth <= 768;
+const bubbleCount = isMobile ? 15 : 45;
+for (let i = 0; i < bubbleCount; i++) createBubble();
 
 // ═══════════════════════════════════════════════════════════
 // ☀️ SUN RAYS — HERO
 // ═══════════════════════════════════════════════════════════
 const sunRaysContainer = document.getElementById('sunRays');
-const numRays = 14;
+const numRays = isMobile ? 8 : 14;
 for (let i = 0; i < numRays; i++) {
   const ray = document.createElement('div');
   ray.className = 'sun-ray';
@@ -114,6 +117,9 @@ document.head.appendChild(styleSheet);
 // 🌊 AMBIENT PARTICLES CANVAS (global floating dust)
 // ═══════════════════════════════════════════════════════════
 (function initAmbient() {
+  // Skip heavy canvas animation on mobile
+  if (isMobile) return;
+  
   const canvas = document.getElementById('ambient-particles');
   const ctx    = canvas.getContext('2d');
   let W, H, particles = [];
