@@ -117,9 +117,6 @@ document.head.appendChild(styleSheet);
 // 🌊 AMBIENT PARTICLES CANVAS (global floating dust)
 // ═══════════════════════════════════════════════════════════
 (function initAmbient() {
-  // Skip heavy canvas animation on mobile
-  if (isMobile) return;
-  
   const canvas = document.getElementById('ambient-particles');
   const ctx    = canvas.getContext('2d');
   let W, H, particles = [];
@@ -131,7 +128,9 @@ document.head.appendChild(styleSheet);
   resize();
   window.addEventListener('resize', resize);
 
-  for (let i = 0; i < 80; i++) {
+  // Reduce particles on mobile
+  const particleCount = isMobile ? 40 : 80;
+  for (let i = 0; i < particleCount; i++) {
     particles.push({
       x: Math.random() * W,
       y: Math.random() * H,
