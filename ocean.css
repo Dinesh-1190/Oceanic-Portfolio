@@ -42,7 +42,10 @@
 
 /* ═══ RESET ═══ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; overflow-x: hidden; }
+html { 
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
 body {
   font-family: var(--font-body);
   background: var(--abyss);
@@ -65,6 +68,13 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .s-contact {
   will-change: auto;
   transform: translateZ(0);
+}
+
+/* Mobile: disable smooth scroll for better performance */
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* Custom scrollbar */
@@ -135,6 +145,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
   transition: all 0.4s var(--ease-ocean);
   cursor: default;
+  will-change: background-color, border-color;
+  transform: translateZ(0);
 }
 .navbar.scrolled {
   background: rgba(0, 20, 50, 0.95);

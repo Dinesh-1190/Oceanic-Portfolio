@@ -24,11 +24,24 @@ mobileMenu.querySelectorAll('.mob-link').forEach(l =>
   })
 );
 
+// ─── Throttle function for performance ─────────────────────
+function throttle(func, wait) {
+  let waiting = false;
+  return function(...args) {
+    if (!waiting) {
+      func.apply(this, args);
+      waiting = true;
+      setTimeout(() => { waiting = false; }, wait);
+    }
+  };
+}
+
 // ─── Navbar scroll ──────────────────────────────────────────
 const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
+const handleNavbarScroll = throttle(() => {
   navbar.classList.toggle('scrolled', window.scrollY > 60);
-}, { passive: true });
+}, 100);
+window.addEventListener('scroll', handleNavbarScroll, { passive: true });
 
 // ─── Active nav link ────────────────────────────────────────
 const sections   = document.querySelectorAll('section[id]');
@@ -38,17 +51,18 @@ const depthValue = document.getElementById('depthValue');
 const depthMap   = { hero: '0m', about: '40m', skills: '200m', projects: '1000m', contact: '3800m' };
 const depthPct   = { hero: 0, about: 20, skills: 45, projects: 75, contact: 100 };
 
-function updateDepth() {
+const updateDepth = throttle(() => {
   let current = 'hero';
+  const scrollY = window.scrollY;
   sections.forEach(sec => {
-    if (window.scrollY >= sec.offsetTop - 200) current = sec.id;
+    if (scrollY >= sec.offsetTop - 200) current = sec.id;
   });
   depthFill.style.width  = (depthPct[current] ?? 0) + '%';
   depthValue.textContent = depthMap[current] ?? '0m';
   navLinks.forEach(l => {
     l.classList.toggle('active', l.getAttribute('href') === '#' + current);
   });
-}
+}, 100);
 window.addEventListener('scroll', updateDepth, { passive: true });
 updateDepth();
 
@@ -305,7 +319,10 @@ document.head.appendChild(styleSheet);
   }
 
   let scrollY = 0;
-  window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
+  let scrollY = 0;
+  window.addEventListener('scroll', throttle(() => { 
+    scrollY = window.scrollY; 
+  }, 50), { passive: true });
 
   (function tick() {
     ctx.clearRect(0, 0, W, H);
@@ -730,20 +747,27 @@ document.head.appendChild(styleSheet);
 // ═══════════════════════════════════════════════════════════
 // 🌊 PARALLAX SCROLL EFFECTS
 // ═══════════════════════════════════════════════════════════
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
+// Disable parallax on mobile for performance
+if (!isMobile) {
+  const handleParallax = throttle(() => {
+    const scrollY = window.scrollY;
 
-  // Hero content gentle parallax
-  const heroContent = document.getElementById('heroContent');
-  if (heroContent) {
-    heroContent.style.transform = `translateY(${scrollY * 0.25}px)`;
-    heroContent.style.opacity   = Math.max(0, 1 - scrollY / window.innerHeight * 1.4);
-  }
+    // Hero content gentle parallax
+    const heroContent = document.getElementById('heroContent');
+    if (heroContent && scrollY < window.innerHeight) {
+      heroContent.style.transform = `translateY(${scrollY * 0.25}px)`;
+      heroContent.style.opacity   = Math.max(0, 1 - scrollY / window.innerHeight * 1.4);
+    }
 
-  // Sun parallax
-  const sunWrap = document.querySelector('.sun-wrap');
-  if (sunWrap) {
-    sunWrap.style.transform = `translateX(-50%) translateY(${scrollY * 0.3}px)`;
+    // Sun parallax
+    const sunWrap = document.querySelector('.sun-wrap');
+    if (sunWrap && scrollY < window.innerHeight) {
+      sunWrap.style.transform = `translateX(-50%) translateY(${scrollY * 0.3}px)`;
+    }
+  }, 16); // ~60fps
+  
+  window.addEventListener('scroll', handleParallax, { passive: true });
+}
   }
 
 }, { passive: true });
