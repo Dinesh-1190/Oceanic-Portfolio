@@ -363,106 +363,230 @@ document.head.appendChild(styleSheet);
 
   function makeShark(fromEdge = false) {
     const dir = Math.random() > 0.5 ? 1 : -1;
-    const sz  = Math.random() * 70 + 60;
-    const spd = Math.random() * 0.4 + 0.15;
+    const sz  = Math.random() * 80 + 70;
+    const baseSpd = Math.random() * 0.6 + 0.3;
     return {
       x:     fromEdge ? (dir === 1 ? -sz * 3 : W + sz * 3) : Math.random() * W,
       baseY: Math.random() * (H * 0.7) + H * 0.1,
       y:     0,
       dir,
       sz,
-      spd,
+      spd: baseSpd,
+      baseSpd,
       wobble: Math.random() * Math.PI * 2,
-      wobSpd: Math.random() * 0.008 + 0.004,
-      wobAmp: Math.random() * 25 + 10,
+      wobSpd: Math.random() * 0.012 + 0.006,
+      wobAmp: Math.random() * 15 + 8,
       tail:   0,
-      tailSpd: Math.random() * 0.06 + 0.04,
-      alpha:  Math.random() * 0.35 + 0.15,
+      tailSpd: Math.random() * 0.12 + 0.08,
+      alpha:  Math.random() * 0.45 + 0.25,
+      // Sharp movement properties
+      burstTimer: 0,
+      burstCooldown: Math.random() * 300 + 200,
+      isBursting: false,
+      burstDuration: 0,
+      bodyWave: 0,
+      bodyWaveSpd: Math.random() * 0.08 + 0.05,
     };
   }
 
   function drawShark(s) {
-    const { x, y, sz, dir, tail, alpha } = s;
+    const { x, y, sz, dir, tail, alpha, bodyWave, isBursting } = s;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(dir, 1);
     ctx.globalAlpha = alpha;
 
-    const tailWag = Math.sin(tail) * 0.18;
-    const bodyCol = 'rgba(15, 40, 80, 1)';
+    const tailWag = Math.sin(tail) * (isBursting ? 0.35 : 0.22);
+    const bodyUndulate = Math.sin(bodyWave) * 0.03;
+    
+    // Dynamic colors based on depth/movement
+    const bodyCol = isBursting ? 'rgba(25, 55, 100, 1)' : 'rgba(18, 45, 85, 1)';
     const darkCol = 'rgba(8, 22, 50, 1)';
+    const highlightCol = 'rgba(40, 70, 120, 0.6)';
 
-    // Tail
+    // Caudal (tail) fin - more realistic forked shape
     ctx.save();
-    ctx.translate(-sz * 1.05, 0);
+    ctx.translate(-sz * 1.1, 0);
     ctx.rotate(tailWag);
     ctx.fillStyle = darkCol;
     ctx.beginPath();
+    // Upper lobe (larger)
     ctx.moveTo(0, 0);
-    ctx.lineTo(-sz * 0.38, -sz * 0.38);
-    ctx.lineTo(-sz * 0.25, 0);
-    ctx.lineTo(-sz * 0.38, sz * 0.38);
+    ctx.bezierCurveTo(-sz * 0.15, -sz * 0.1, -sz * 0.35, -sz * 0.35, -sz * 0.55, -sz * 0.55);
+    ctx.bezierCurveTo(-sz * 0.4, -sz * 0.3, -sz * 0.25, -sz * 0.1, -sz * 0.2, 0);
+    // Lower lobe (smaller)
+    ctx.bezierCurveTo(-sz * 0.25, sz * 0.08, -sz * 0.35, sz * 0.25, -sz * 0.45, sz * 0.35);
+    ctx.bezierCurveTo(-sz * 0.3, sz * 0.2, -sz * 0.15, sz * 0.08, 0, 0);
+    ctx.closePath();
+    ctx.fill();
+    // Tail fin detail lines
+    ctx.strokeStyle = 'rgba(0,0,0,0.15)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(-sz * 0.1, -sz * 0.05);
+    ctx.lineTo(-sz * 0.4, -sz * 0.4);
+    ctx.stroke();
+    ctx.restore();
+
+    // Peduncle (tail base) - narrower connection
+    ctx.fillStyle = bodyCol;
+    ctx.beginPath();
+    ctx.ellipse(-sz * 0.95, 0, sz * 0.18, sz * 0.08, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Main body with undulation
+    ctx.save();
+    ctx.rotate(bodyUndulate);
+    ctx.fillStyle = bodyCol;
+    ctx.beginPath();
+    // Snout to body - more streamlined shark shape
+    ctx.moveTo(sz * 1.15, 0);
+    // Upper profile - distinct snout
+    ctx.bezierCurveTo(sz * 1.0, -sz * 0.08, sz * 0.85, -sz * 0.18, sz * 0.6, -sz * 0.24);
+    ctx.bezierCurveTo(sz * 0.2, -sz * 0.28, -sz * 0.3, -sz * 0.22, -sz * 0.85, -sz * 0.12);
+    // Back to tail
+    ctx.lineTo(-sz * 1.0, -sz * 0.08);
+    ctx.lineTo(-sz * 1.0, sz * 0.08);
+    // Lower profile - slight belly curve
+    ctx.lineTo(-sz * 0.85, sz * 0.14);
+    ctx.bezierCurveTo(-sz * 0.3, sz * 0.26, sz * 0.2, sz * 0.24, sz * 0.5, sz * 0.18);
+    ctx.bezierCurveTo(sz * 0.85, sz * 0.12, sz * 1.0, sz * 0.05, sz * 1.15, 0);
     ctx.closePath();
     ctx.fill();
     ctx.restore();
 
-    // Main body
-    ctx.fillStyle = bodyCol;
-    ctx.beginPath();
-    ctx.moveTo(sz * 1.1, 0);
-    ctx.bezierCurveTo(sz * 0.8, -sz * 0.28, -sz * 0.3, -sz * 0.22, -sz * 1.0, -sz * 0.1);
-    ctx.bezierCurveTo(-sz * 1.05, 0, -sz * 1.0, sz * 0.1, -sz * 1.0, sz * 0.1);
-    ctx.bezierCurveTo(-sz * 0.3, sz * 0.28, sz * 0.6, sz * 0.22, sz * 1.1, 0);
-    ctx.closePath();
-    ctx.fill();
-
-    // Belly lighter
-    const bellyGrad = ctx.createLinearGradient(0, sz * 0.05, 0, sz * 0.22);
-    bellyGrad.addColorStop(0, 'rgba(50,80,130,0.5)');
-    bellyGrad.addColorStop(1, 'rgba(30,60,110,0)');
+    // Countershading - lighter belly gradient
+    const bellyGrad = ctx.createLinearGradient(0, 0, 0, sz * 0.25);
+    bellyGrad.addColorStop(0, 'rgba(60,90,140,0)');
+    bellyGrad.addColorStop(0.5, 'rgba(80,110,160,0.4)');
+    bellyGrad.addColorStop(1, 'rgba(100,130,180,0.6)');
     ctx.fillStyle = bellyGrad;
     ctx.beginPath();
-    ctx.ellipse(0, sz * 0.1, sz * 0.65, sz * 0.13, 0, 0, Math.PI * 2);
+    ctx.ellipse(sz * 0.1, sz * 0.08, sz * 0.7, sz * 0.12, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    // Dorsal fin
-    ctx.fillStyle = darkCol;
-    ctx.beginPath();
-    ctx.moveTo(sz * 0.15, -sz * 0.22);
-    ctx.lineTo(sz * 0.48, -sz * 0.78);
-    ctx.lineTo(sz * 0.68, -sz * 0.22);
-    ctx.closePath();
-    ctx.fill();
-
-    // Pectoral fin
-    ctx.fillStyle = darkCol;
-    ctx.beginPath();
-    ctx.moveTo(sz * 0.2, 0);
-    ctx.lineTo(sz * 0.55, sz * 0.45);
-    ctx.lineTo(sz * 0.65, 0);
-    ctx.closePath();
-    ctx.fill();
-
-    // Eye (small, dark, menacing)
-    ctx.fillStyle = 'rgba(20,20,60,0.9)';
-    ctx.beginPath();
-    ctx.arc(sz * 0.82, -sz * 0.06, sz * 0.055, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = 'rgba(80,80,160,0.3)';
-    ctx.beginPath();
-    ctx.arc(sz * 0.82, -sz * 0.06, sz * 0.025, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Gill lines
-    ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+    // Lateral line (sensory organ)
+    ctx.strokeStyle = 'rgba(30,50,80,0.3)';
     ctx.lineWidth = 1.5;
-    for (let g = 0; g < 4; g++) {
-      const gx = sz * 0.55 - g * sz * 0.07;
+    ctx.beginPath();
+    ctx.moveTo(sz * 0.9, -sz * 0.02);
+    ctx.bezierCurveTo(sz * 0.5, -sz * 0.08, 0, -sz * 0.1, -sz * 0.7, -sz * 0.06);
+    ctx.stroke();
+
+    // Dorsal fin - iconic tall triangle
+    ctx.fillStyle = darkCol;
+    ctx.beginPath();
+    ctx.moveTo(sz * 0.1, -sz * 0.24);
+    ctx.bezierCurveTo(sz * 0.2, -sz * 0.5, sz * 0.35, -sz * 0.85, sz * 0.45, -sz * 0.9);
+    ctx.bezierCurveTo(sz * 0.55, -sz * 0.7, sz * 0.65, -sz * 0.4, sz * 0.7, -sz * 0.24);
+    ctx.closePath();
+    ctx.fill();
+    // Dorsal fin highlight
+    ctx.fillStyle = highlightCol;
+    ctx.beginPath();
+    ctx.moveTo(sz * 0.2, -sz * 0.3);
+    ctx.lineTo(sz * 0.4, -sz * 0.75);
+    ctx.lineTo(sz * 0.45, -sz * 0.35);
+    ctx.closePath();
+    ctx.fill();
+
+    // Second dorsal fin (smaller)
+    ctx.fillStyle = darkCol;
+    ctx.beginPath();
+    ctx.moveTo(-sz * 0.45, -sz * 0.12);
+    ctx.lineTo(-sz * 0.35, -sz * 0.28);
+    ctx.lineTo(-sz * 0.25, -sz * 0.12);
+    ctx.closePath();
+    ctx.fill();
+
+    // Pectoral fins - swept back, powerful
+    ctx.fillStyle = darkCol;
+    ctx.beginPath();
+    ctx.moveTo(sz * 0.35, sz * 0.1);
+    ctx.bezierCurveTo(sz * 0.45, sz * 0.25, sz * 0.4, sz * 0.45, sz * 0.2, sz * 0.55);
+    ctx.bezierCurveTo(sz * 0.35, sz * 0.4, sz * 0.5, sz * 0.2, sz * 0.55, sz * 0.1);
+    ctx.closePath();
+    ctx.fill();
+
+    // Pelvic fins
+    ctx.fillStyle = darkCol;
+    ctx.beginPath();
+    ctx.moveTo(-sz * 0.15, sz * 0.12);
+    ctx.lineTo(-sz * 0.05, sz * 0.32);
+    ctx.lineTo(sz * 0.08, sz * 0.12);
+    ctx.closePath();
+    ctx.fill();
+
+    // Anal fin
+    ctx.fillStyle = darkCol;
+    ctx.beginPath();
+    ctx.moveTo(-sz * 0.55, sz * 0.1);
+    ctx.lineTo(-sz * 0.45, sz * 0.22);
+    ctx.lineTo(-sz * 0.35, sz * 0.1);
+    ctx.closePath();
+    ctx.fill();
+
+    // Snout detail - nostrils
+    ctx.fillStyle = 'rgba(10,25,50,0.5)';
+    ctx.beginPath();
+    ctx.ellipse(sz * 0.95, sz * 0.02, sz * 0.025, sz * 0.015, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Eye - menacing with reflection
+    ctx.fillStyle = 'rgba(5,10,30,0.95)';
+    ctx.beginPath();
+    ctx.ellipse(sz * 0.78, -sz * 0.08, sz * 0.055, sz * 0.045, 0, 0, Math.PI * 2);
+    ctx.fill();
+    // Eye shine
+    ctx.fillStyle = 'rgba(100,120,180,0.4)';
+    ctx.beginPath();
+    ctx.arc(sz * 0.79, -sz * 0.09, sz * 0.02, 0, Math.PI * 2);
+    ctx.fill();
+    // Eye glow when bursting
+    if (isBursting) {
+      ctx.fillStyle = 'rgba(150,180,255,0.3)';
       ctx.beginPath();
-      ctx.moveTo(gx, -sz * 0.12);
-      ctx.lineTo(gx - sz * 0.03, sz * 0.12);
+      ctx.arc(sz * 0.78, -sz * 0.08, sz * 0.07, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Gill slits - 5 slits like real sharks
+    ctx.strokeStyle = 'rgba(5,15,35,0.35)';
+    ctx.lineWidth = 2;
+    for (let g = 0; g < 5; g++) {
+      const gx = sz * 0.58 - g * sz * 0.065;
+      ctx.beginPath();
+      ctx.moveTo(gx, -sz * 0.14);
+      ctx.bezierCurveTo(gx - sz * 0.01, -sz * 0.05, gx - sz * 0.02, sz * 0.05, gx - sz * 0.03, sz * 0.14);
       ctx.stroke();
     }
+
+    // Mouth line
+    ctx.strokeStyle = 'rgba(5,15,35,0.4)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(sz * 1.05, sz * 0.02);
+    ctx.bezierCurveTo(sz * 0.9, sz * 0.08, sz * 0.7, sz * 0.1, sz * 0.5, sz * 0.08);
+    ctx.stroke();
+
+    // Teeth hint (subtle)
+    ctx.fillStyle = 'rgba(200,210,230,0.15)';
+    ctx.beginPath();
+    ctx.moveTo(sz * 1.0, sz * 0.03);
+    ctx.lineTo(sz * 0.95, sz * 0.06);
+    ctx.lineTo(sz * 0.9, sz * 0.03);
+    ctx.lineTo(sz * 0.85, sz * 0.06);
+    ctx.lineTo(sz * 0.8, sz * 0.03);
+    ctx.stroke();
+
+    // Body highlights (wet sheen)
+    const sheenGrad = ctx.createLinearGradient(sz * 0.3, -sz * 0.25, sz * 0.3, sz * 0.1);
+    sheenGrad.addColorStop(0, 'rgba(100,140,200,0.15)');
+    sheenGrad.addColorStop(0.5, 'rgba(100,140,200,0)');
+    ctx.fillStyle = sheenGrad;
+    ctx.beginPath();
+    ctx.ellipse(sz * 0.3, -sz * 0.1, sz * 0.5, sz * 0.15, -0.1, 0, Math.PI * 2);
+    ctx.fill();
 
     ctx.restore();
   }
@@ -475,10 +599,35 @@ document.head.appendChild(styleSheet);
   (function tick() {
     ctx.clearRect(0, 0, W, H);
     sharks.forEach(s => {
-      s.x      += s.spd * s.dir;
+      // Sharp burst movement system
+      s.burstTimer++;
+      if (!s.isBursting && s.burstTimer > s.burstCooldown) {
+        s.isBursting = true;
+        s.burstDuration = Math.random() * 40 + 20;
+        s.burstTimer = 0;
+      }
+      if (s.isBursting) {
+        s.burstDuration--;
+        if (s.burstDuration <= 0) {
+          s.isBursting = false;
+          s.burstCooldown = Math.random() * 300 + 200;
+        }
+      }
+
+      // Speed varies - cruising vs burst
+      const currentSpd = s.isBursting ? s.baseSpd * 2.5 : s.baseSpd;
+      s.x += currentSpd * s.dir;
+      
+      // Subtle vertical movement
       s.wobble += s.wobSpd;
-      s.tail   += s.tailSpd;
-      s.y       = s.baseY + Math.sin(s.wobble) * s.wobAmp;
+      s.tail += s.isBursting ? s.tailSpd * 1.8 : s.tailSpd;
+      s.bodyWave += s.bodyWaveSpd;
+      s.y = s.baseY + Math.sin(s.wobble) * s.wobAmp;
+      
+      // Slight depth change during burst
+      if (s.isBursting) {
+        s.y += Math.sin(s.burstDuration * 0.1) * 5;
+      }
 
       if (s.dir === 1  && s.x > W + s.sz * 2) { Object.assign(s, makeShark(true)); s.dir = 1; s.x = -s.sz * 2; }
       if (s.dir === -1 && s.x < -s.sz * 2)    { Object.assign(s, makeShark(true)); s.dir = -1; s.x = W + s.sz * 2; }
@@ -681,13 +830,15 @@ document.head.appendChild(styleSheet);
     ctx.scale(f.dir, 1);
     ctx.globalAlpha = 0.5;
     ctx.fillStyle = f.col;
+    // Body
     ctx.beginPath();
     ctx.ellipse(0, 0, f.sz, f.sz * 0.4, 0, 0, Math.PI * 2);
     ctx.fill();
+    // Tail (behind the body)
     ctx.beginPath();
-    ctx.moveTo(-f.sz * 0.9, 0);
-    ctx.lineTo(-f.sz * 1.4, -f.sz * 0.4);
-    ctx.lineTo(-f.sz * 1.4, f.sz * 0.4);
+    ctx.moveTo(-f.sz * 0.8, 0);
+    ctx.lineTo(-f.sz * 1.5, -f.sz * 0.5);
+    ctx.lineTo(-f.sz * 1.5, f.sz * 0.5);
     ctx.closePath();
     ctx.fill();
     ctx.restore();
