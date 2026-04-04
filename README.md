@@ -12,12 +12,12 @@ An ocean-themed personal portfolio website built with HTML, CSS, and JavaScript.
 - `assets/images/`
 - `assets/videos/`
 
-## Fish Video
+## Fish Animation
 
-<video src="assets/videos/fish.mp4" autoplay loop muted playsinline preload="auto" width="960"></video>
+![Fish Swimming](assets/fish.gif)
 
-If the embedded player does not appear on your device, open the video directly:
-[Watch fish.mp4](assets/videos/fish.mp4)
+*Click below for full quality video:*
+[▶ Watch fish.mp4](assets/videos/fish.mp4)
 
 ## Run Locally
 
