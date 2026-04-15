@@ -856,12 +856,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   align-items: center;
   gap: 8px;
   padding: 14px 30px;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
+  background: rgb(4, 168, 232);
+  
   border: 1.5px solid rgba(255,255,255,0.3);
-  color: rgba(255,255,255,0.9);
+  color: rgba(0, 0, 0, 0.947);
   font-family: var(--font-mono);
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   border-radius: 50px;
   letter-spacing: 0.06em;
   transition: all 0.35s;
@@ -882,13 +882,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .connect-pill {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  padding: 7px 16px;
-  background: rgba(0,0,0,0.2);
-  border: 1px solid rgba(255,255,255,0.15);
+  font-size: 0.90rem;
+  padding: 7px 30px;
+  background: rgb(0, 8, 0);
+  border: 1px solid rgba(162, 17, 17, 0.15);
   border-radius: 50px;
   color: rgba(200,240,255,0.85);
   transition: all 0.3s;
+  margin: 10px;
 }
 .connect-pill:hover {
   background: rgba(0,255,212,0.12);
@@ -1810,3 +1811,4 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     transition-duration: 0.01ms !important;
   }
 }
+
